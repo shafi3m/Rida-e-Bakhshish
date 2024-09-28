@@ -1,0 +1,435 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
+
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  text-decoration: none;
+  font-family: 'Poppins', sans-serif;
+  /* border: 2px solid red; */
+}
+.wrapper{
+  background: #171c24;
+  position: fixed; /* Fixes the navbar to the top */
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 100; 
+}
+.wrapper nav{
+  position: relative;
+  display: flex;
+  max-width: calc(100% - 200px);
+  margin: 0 auto;
+  height: 70px;
+  align-items: center;
+  justify-content: space-between;
+}
+nav .content{
+  display: flex;
+  align-items: center;
+}
+nav .content .links{
+  margin-left: 80px;
+  display: flex;
+}
+.content .logo a{
+  color: #fff;
+  font-size: 30px;
+  font-weight: 600;
+}
+.content .links li{
+  list-style: none;
+  line-height: 70px;
+}
+.content .links li a,
+.content .links li label{
+  color: #fff;
+  font-size: 18px;
+  font-weight: 500;
+  padding: 9px 17px;
+  border-radius: 5px;
+  transition: all 0.3s ease;
+}
+.content .links li label{
+  display: none;
+}
+.content .links li a:hover,
+.content .links li label:hover{
+  background: #323c4e;
+}
+.wrapper .search-icon,
+.wrapper .menu-icon{
+  color: #fff;
+  font-size: 18px;
+  cursor: pointer;
+  line-height: 70px;
+  width: 70px;
+  text-align: center;
+}
+.wrapper .menu-icon{
+  display: none;
+}
+.wrapper #show-search:checked ~ .search-icon i::before{
+  content: "\f00d";
+}
+
+.wrapper .search-box{
+  position: absolute;
+  height: 100%;
+  max-width: calc(100% - 50px);
+  width: 100%;
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.3s ease;
+}
+.wrapper #show-search:checked ~ .search-box{
+  opacity: 1;
+  pointer-events: auto;
+}
+.search-box input{
+  width: 100%;
+  height: 100%;
+  border: none;
+  outline: none;
+  font-size: 17px;
+  color: #fff;
+  background: #171c24;
+  padding: 0 100px 0 15px;
+}
+.search-box input::placeholder{
+  color: #f2f2f2;
+}
+.search-box .go-icon{
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  line-height: 60px;
+  width: 70px;
+  background: #171c24;
+  border: none;
+  outline: none;
+  color: #fff;
+  font-size: 20px;
+  cursor: pointer;
+}
+.wrapper input[type="checkbox"]{
+  display: none;
+}
+
+/* Dropdown Menu code start */
+.content .links ul{
+  position: absolute;
+  background: #171c24;
+  top: 80px;
+  z-index: -1;
+  opacity: 0;
+  visibility: hidden;
+}
+.content .links li:hover > ul{
+  top: 70px;
+  opacity: 1;
+  visibility: visible;
+  transition: all 0.3s ease;
+}
+.content .links ul li a{
+  display: block;
+  width: 100%;
+  line-height: 30px;
+  border-radius: 0px!important;
+}
+.content .links ul ul{
+  position: absolute;
+  top: 0;
+  right: calc(-100% + 8px);
+}
+.content .links ul li{
+  position: relative;
+}
+.content .links ul li:hover ul{
+  top: 0;
+}
+
+/* Responsive code start */
+@media screen and (max-width: 1250px){
+  .wrapper nav{
+    max-width: 100%;
+    padding: 0 20px;
+  }
+  nav .content .links{
+    margin-left: 30px;
+  }
+  .content .links li a{
+    padding: 8px 13px;
+  }
+  .wrapper .search-box{
+    max-width: calc(100% - 100px);
+  }
+  .wrapper .search-box input{
+    padding: 0 100px 0 15px;
+  }
+}
+
+@media screen and (max-width: 900px){
+  .wrapper .menu-icon{
+    display: block;
+  }
+  .wrapper #show-menu:checked ~ .menu-icon i::before{
+    content: "\f00d";
+  }
+  nav .content .links{
+    display: block;
+    position: fixed;
+    background: #14181f;
+    height: 100%;
+    width: 100%;
+    top: 70px;
+    left: -100%;
+    margin-left: 0;
+    max-width: 350px;
+    overflow-y: auto;
+    padding-bottom: 100px;
+    transition: all 0.3s ease;
+  }
+  nav #show-menu:checked ~ .content .links{
+    left: 0%;
+  }
+  .content .links li{
+    margin: 15px 20px;
+  }
+  .content .links li a,
+  .content .links li label{
+    line-height: 40px;
+    font-size: 20px;
+    display: block;
+    padding: 8px 18px;
+    cursor: pointer;
+  }
+  .content .links li a.desktop-link{
+    display: none;
+  }
+
+  /* dropdown responsive code start */
+  .content .links ul,
+  .content .links ul ul{
+    position: static;
+    opacity: 1;
+    visibility: visible;
+    background: none;
+    max-height: 0px;
+    overflow: hidden;
+  }
+  .content .links #show-features:checked ~ ul,
+  .content .links #show-services:checked ~ ul,
+  .content .links #show-items:checked ~ ul{
+    max-height: 100vh;
+  }
+  .content .links ul li{
+    margin: 7px 20px;
+  }
+  .content .links ul li a{
+    font-size: 18px;
+    line-height: 30px;
+    border-radius: 5px!important;
+  }
+}
+
+/* Style the language toggle button container */
+.language-toggle {
+    margin: 15px 0; /* Add margin for spacing */
+    text-align: center; /* Center-align the button */
+}
+
+/* Style the button */
+.language-toggle button {
+    background-color: #007bff; /* Blue background color */
+    color: #fff; /* White text color */
+    border: none; /* Remove border */
+    border-radius: 5px; /* Rounded corners */
+    padding: 5px 15px; /* Padding inside the button */
+    font-size: 16px; /* Font size */
+    cursor: pointer; /* Pointer cursor on hover */
+    transition: background-color 0.3s ease, transform 0.3s ease; /* Smooth transition for background color and scale */
+}
+
+/* Change background color on hover */
+.language-toggle button:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+}
+
+/* Add a slight scale effect on click */
+.language-toggle button:active {
+    transform: scale(0.95); /* Slightly shrink the button */
+}
+
+/* Style for the button when disabled */
+.language-toggle button:disabled {
+    background-color: #6c757d; /* Grey background for disabled state */
+    cursor: not-allowed; /* Change cursor for disabled state */
+}
+
+
+@media screen and (max-width: 400px){
+  .wrapper nav{
+    padding: 0 10px;
+  }
+  .content .logo a{
+    font-size: 20px;
+  }
+  .wrapper .search-box{
+    max-width: calc(100% - 70px);
+  }
+  .wrapper .search-box .go-icon{
+    width: 30px;
+    right: 0;
+  }
+  .wrapper .search-box input{
+    padding-right: 30px;
+  }
+  #poem-content {
+    font-size: 16px; /* Slightly smaller font size for mobile */
+    padding: 8px; /* Reduced padding for smaller screens */
+  }
+}
+body.urdu {
+    direction: rtl;
+    text-align: right;
+}
+
+/* Other styles specific to Urdu */
+
+.popular {
+    position: relative; /* Position relative to its normal flow */
+    top: 50px; /* Adjust top position if necessary */
+    left: 50%;
+    transform: translateX(-50%); /* Center horizontally */
+    width: 100%;
+    padding: 20px; /* Padding for spacing */
+    text-align: center;
+    z-index: 1; /* Ensure it's below the navbar */
+    background: #fff; /* Optional: Background color for better visibility */
+}
+
+
+.popular h2{
+  font-size: 45px;
+  margin: 5px 0;
+}
+
+
+
+#poem-content {
+  font-size: 18px; /* Adjust the font size for readability */
+  line-height: 1.8; /* Increase line height for better readability */
+  text-align: justify; /* Justify text for a cleaner look */
+  white-space: pre-wrap; /* Preserve formatting like line breaks */
+  color: #333; /* Dark gray color for less strain on the eyes */
+  margin-top: 20px; /* Space above the content */
+  padding: 10px; /* Padding inside the content area */
+  background-color: #f9f9f9; /* Light background to highlight the poem */
+  border-radius: 5px; /* Slightly rounded corners */
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+  text-align: center;
+}
+
+@media (max-width: 600px) {
+  #poem-content {
+    font-size: 16px; /* Slightly smaller font size for mobile */
+    padding: 8px; /* Reduced padding for smaller screens */
+  }
+}
+
+#poem-list h4 {
+  font-size: 14px; /* Size of the title text */
+  color: #2c3e50; /* Dark color for readability */
+  text-align: left; /* Align text to the left */
+  margin: 10px 0; /* Space above and below each title */
+  padding: 10px; /* Padding inside the title box */
+  border-radius: 10px; /* Rounded corners */
+  background: linear-gradient(135deg, #f5f7fa, #c3cfe2); /* Gradient background */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Soft shadow effect */
+  transition: transform 0.3s ease, color 0.3s ease; /* Smooth transition effects */
+  display: flex; /* Flexbox to align emoji and text */
+  align-items: center; /* Center align items vertically */
+}
+
+#poem-list h4:hover {
+  color: #3498db; /* Change color on hover */
+  transform: scale(1.05); /* Slightly scale up on hover */
+}
+
+#poem-list h4::before {
+  content: ""; /* Add a pen emoji before each title */
+  font-size: 24px; /* Size of the emoji */
+  margin-right: 10px; /* Space between the emoji and the title text */
+}
+
+
+
+
+
+
+
+
+ #poem-title {
+        font-size: 18px; /* Size of the title */
+        font-weight: bold; /* Bold text for emphasis */
+        color: #2c3e50; /* Dark color for readability */
+        text-align: center; /* Center-align the text */
+        margin: 20px 0; /* Space above and below the title */
+        padding: 10px; /* Padding inside the title box */
+        border-radius: 10px; /* Rounded corners */
+        background: linear-gradient(135deg, #f5f7fa, #c3cfe2); /* Gradient background */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Soft shadow effect */
+        transition: transform 0.3s ease, color 0.3s ease; /* Smooth transition effects */
+    }
+    
+    #poem-title:hover {
+        color: #3498db; /* Change color on hover */
+        transform: scale(1.05); /* Slightly scale up on hover */
+    }
+    
+    #poem-title:before {
+        content: ""; /* Add a music note icon before the title */
+        font-size: 18px; /* Size of the icon */
+        vertical-align: middle; /* Align icon with the text */
+    }
+    
+    #poem-title:after {
+        content: ""; /* Add a music note icon after the title */
+        font-size: 18px; /* Size of the icon */
+        vertical-align: middle; /* Align icon with the text */
+    }
+
+    .poem-title a {
+      direction: rtl; /* Sets the text direction to right-to-left */
+      text-align: right; /* Aligns the text to the right */
+      display: block; /* Ensures block-level alignment */
+    }
+    
+    #language-text {
+      direction: rtl;
+      text-align: right;
+    }
+    
+    blended-image {
+      position: relative;
+      display: inline-block;
+    }
+    
+    .blended-image img {
+      display: none;
+      position: relative;
+      right: -45%;
+      width: 50%; /* Adjust the width as needed */
+      height: 20%; /* Maintain aspect ratio */
+     /* padding: 60px; */
+    }
+    
+    #category {
+      font-size: 18px; /* Adjust size based on your design */
+      color: #555; /* Choose a color that complements the overall theme */
+      margin: 10px 0; /* Adjust spacing as needed */
+      font-weight: bold; /* Make the category text stand out */
+    }

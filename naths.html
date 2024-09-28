@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Naths</title>
+    <link rel="stylesheet" href="styles.css" />
+    <style>
+      /* Basic CSS styling */
+      body {
+        margin: 0;
+        padding: 0;
+        text-align: center;
+      }
+
+      h1 {
+        margin-top: 100px;
+        font-size: 2em;
+        color: #333;
+      }
+
+      /* Style for poem list container */
+      .poem-list {
+        margin: 20px auto;
+        padding: 0;
+        max-width: 600px;
+        list-style-type: none;
+      }
+
+      /* Style for each poem title */
+      .poem-list a {
+        display: block;
+        text-decoration: none;
+        color: #333;
+        font-size: 20px; /* Adjusted font size */
+        font-weight: bold;
+        margin-bottom: 15px;
+        padding: 10px;
+        border-radius: 5px;
+        background: linear-gradient(135deg, #f5f5f5, #e0e0e0);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease;
+        position: relative;
+      }
+
+      /* Hover effect for the poem titles */
+      .poem-list a:hover {
+        background: linear-gradient(135deg, #e0e0e0, #f5f5f5);
+        color: #007bff;
+        text-decoration: none;
+        transform: translateY(-2px);
+      }
+
+      /* Add a cool underline effect on hover */
+      .poem-list a::after {
+        content: "";
+        display: block;
+        width: 0;
+        height: 2px;
+        background: #007bff;
+        transition: width 0.3s ease;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+      }
+
+      /* Extend the underline on hover */
+      .poem-list a:hover::after {
+        width: 100%;
+      }
+
+      /* Right-to-left alignment for Urdu text */
+      .rtl .poem-list a {
+        direction: rtl;
+        text-align: right;
+      }
+
+      /* Center the language toggle button */
+      #language-toggle {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 20px auto;
+        padding: 10px 20px;
+        font-size: 1em;
+        border: none;
+        background-color: #007bff;
+        color: white;
+        cursor: pointer;
+        border-radius: 5px;
+        transition: background-color 0.3s;
+      }
+
+      /* Icon style */
+      #language-toggle i {
+        margin-right: 8px;
+      }
+
+      /* Hover effect for the language toggle button */
+      #language-toggle:hover {
+        background-color: #0056b3;
+      }
+    </style>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Nastaliq+Urdu:wght@400&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="wrapper">
+      <nav>
+        <input type="checkbox" id="show-search" />
+        <input type="checkbox" id="show-menu" />
+        <label for="show-menu" class="menu-icon"
+          ><i class="fas fa-bars"></i
+        ></label>
+        <div class="content">
+          <div class="logo"><a href="index.html">Kalaam</a></div>
+          <ul class="links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="#">Books</a></li>
+            <li>
+              <a href="#" class="desktop-link">Categories</a>
+              <input type="checkbox" id="show-features" />
+              <label for="show-features">Categories</label>
+              <ul>
+                <li><a href="naths.html">Naat</a></li>
+                <li><a href="manqabat.html">Manqabat</a></li>
+                <li><a href="#">Munajat</a></li>
+              </ul>
+            </li>
+
+            <li><a href="feedback.html">Feedback</a></li>
+          </ul>
+        </div>
+      </nav>
+    </div>
+
+    <div>
+      <h1>Naath/نعت</h1>
+    </div>
+
+    <button id="language-toggle">
+      <i class="fas fa-globe"></i>
+      <span id="language-text">UR</span>
+    </button>
+
+    <ul id="poem-list" class="poem-list"></ul>
+    <script>
+      let currentLanguage = "en"; // Default language
+
+      async function fetchPoems() {
+        try {
+          const response = await fetch("poems.json");
+          if (!response.ok) {
+            throw new Error("Network response was not ok");
+          }
+          const poems = await response.json();
+          return poems;
+        } catch (error) {
+          console.error("Failed to fetch poems:", error);
+          return [];
+        }
+      }
+
+      function applyFont() {
+        const poemLinks = document.querySelectorAll(".poem-list a");
+
+        poemLinks.forEach((link) => {
+          if (currentLanguage === "ur") {
+            link.style.fontFamily = "'Noto Nastaliq Urdu', sans-serif";
+            link.style.fontSize = "14px"; // Adjusted font size for Urdu
+          } else {
+            link.style.fontFamily = "'Poppins', sans-serif";
+            link.style.fontSize = "14px"; // Adjusted font size for English
+          }
+        });
+
+        if (currentLanguage === "ur") {
+          document.body.classList.add("rtl");
+        } else {
+          document.body.classList.remove("rtl");
+        }
+      }
+
+      async function displayPoems() {
+        const poems = await fetchPoems();
+        const category = "Naat"; // Category in English
+        const poemListElement = document.getElementById("poem-list");
+
+        const filteredPoems = poems.filter(
+          (poem) => poem.category.en === category
+        );
+
+        poemListElement.innerHTML = ""; // Clear previous content
+
+        filteredPoems.forEach((poem) => {
+          const title = poem.title[currentLanguage];
+          const poemLink = document.createElement("a");
+          poemLink.href = `display.html?id=${poem.id}`;
+          poemLink.textContent = title;
+          poemListElement.appendChild(poemLink);
+        });
+
+        applyFont(); // Apply font settings based on the current language
+        document.getElementById("language-text").textContent =
+          currentLanguage === "en" ? "UR" : "EN";
+      }
+
+      document
+        .getElementById("language-toggle")
+        .addEventListener("click", () => {
+          currentLanguage = currentLanguage === "en" ? "ur" : "en";
+          displayPoems(); // Update the poem list based on the selected language
+        });
+
+      // Initialize the page with default language
+      displayPoems();
+    </script>
+  </body>
+</html>
